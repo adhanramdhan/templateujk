@@ -91,12 +91,13 @@
                         </div>
                         <div class="mt-3">
                           <h5>Kembalian: <span id="kembalian">0</span></h5>
-                          <input type="hidden" id="hidden_kembalian">
-                          <input type="text" id="kembalian" name="kembalian" class="form-control mb-3" placeholder="masukan ulang kembalian"> 
-
+                          {{-- <input type="hidden" id="hidden_kembalian"> --}}
+                          {{-- <input type="text" id="kembalian" name="kembalian" class="form-control mb-3" placeholder="masukan ulang kembalian"> --}}
                           <input type="number" name="jumlah" class="form-control mb-" placeholder="jumlah">
+                          <input type="hidden" name="total_harga" id="hidden_total_harga">
+                          <input type="hidden" name="kembalian" id="hidden_kembalian">
                         </div>
-                        
+
                       </div>
 
                       <hr>
@@ -115,7 +116,7 @@
             </div>
             <p class="text-center">
               <span>Sudah meminjam?</span>
-            
+
             </p>
           </div>
         </div>
@@ -135,15 +136,15 @@
         <td><button type='button' class='btn btn-danger remove-row'><i class='bx bx-trash me-1'></i>Delete</button></td>
         <td>
           <select name='id_barang[]' class='form-control select-barang'>
-            <option value=''>Select books</option>
+            <option value=''>Select barang</option>
             @foreach ($barang as $item)
               <option value='{{ $item->id }}'>{{ $item->nama_barang }}</option>
             @endforeach
           </select>
         </td>
-        <td><input type='number' name='qty[]' class='form-control qty-input' value="1" min="1"></td>
+         <td><input type='number' name='qty[]' class='form-control qty-input' oninput='updateTotalHarga(this)' min='1' max=''></td>
         <td><input type='number' name='harga[]' class='form-control harga-input' readonly></td>
-        <td><input type='number' name='total_harga[]' class='form-control total-harga-input' readonly></td>
+        <td><input type='number' class='form-control total-harga-input' readonly></td>
       `;
       tbody.appendChild(newTr);
     });
@@ -179,6 +180,7 @@
       document.querySelector('#kembalian').innerText = kembalian;
       document.querySelector('#hidden_kembalian').value = kembalian;
 
+
     });
 
     function calculateTotalHarga() {
@@ -187,6 +189,8 @@
         totalHarga += parseInt(input.value);
       });
       document.querySelector('#total-harga').innerText = totalHarga;
+
+      document.querySelector('#hidden_total_harga').value = totalHarga;
       // document.querySelector('#total-harga').value = totalHarga;
     }
   </script>

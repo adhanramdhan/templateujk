@@ -68,37 +68,47 @@ class TransaksiController extends Controller
     }
 
     public function showTrx(Request $request)
-    {
-        $date = now()->format('Ymd');
-        $members = User::all();
-        $transactionCode = $this->GCTrx();
-        $barang = Barang::all();
-        return view('trx.transaksi' , compact('members' , 'transactionCode' , 'barang' , 'date'));
-    }
+{
+    $date = now()->format('Ymd');
+    $members = User::all();
+    $transactionCode = $this->GCTrx();
+    $barang = Barang::where('qty', '>', 0)->get();
+    return view('trx.transaksi', compact('members', 'transactionCode', 'barang', 'date'));
+}
+
     public function penjualan()
     {
+
         $datas = penjualan::with(['usertrxname' , 'dls'])->get();
         return view('trx.penjualan' , compact('datas'));
     }
     public function penjualanstore(Request $request)
     {
         // Simpan data ke tabel penjualan
-        $jual = penjualan::create([
+
+
+        $penjualan = Penjualan::create([
             'kode_transaksi' => $request->kode_transaksi,
             'tanggal_transaksi' => $request->tanggal_transaksi,
             'id_user' => $request->id_user,
         ]);
 
         foreach ($request->id_barang as $index => $id_barang) {
+            $barang = Barang::find($id_barang);
+            $qty = $request->qty[$index];
+
+            // Mengurangi stok barang
+            $barang->kurangiStok($qty);
+
             detail_penjualan::create([
-                'id_penjualan' => $jual->id,
+                'id_penjualan' => $penjualan->id,
                 'id_barang' => $id_barang,
                 'harga' => $request->harga[$index],
-                'qty' => $request->qty[$index],
-                'total_harga' => $request->total_harga[$index],
-                'nominal_bayar' => $request->nominal_bayar[$index],
+                'qty' => $qty,
+                'total_harga' => $request->harga[$index] * $qty,
+                'jumlah' => $request->harga[$index] * $qty,
+                'nominal_bayar' => $request->nominal_bayar,
                 'kembalian' => $request->kembalian,
-                'jumlah' => $request->jumlah,
             ]);
         }
         return redirect()->to('dashboard')->with('success', 'Penjualab created successfully!');
@@ -108,7 +118,7 @@ class TransaksiController extends Controller
         date_default_timezone_set("Asia/Jakarta");
         $userId = Auth::id();
         $date = now()->format('Ymd');
-        $time = now()->format('His'); 
+        $time = now()->format('His');
         return 'TRX-' . $date . '-' . $time . '-' . $userId;
     }
 }

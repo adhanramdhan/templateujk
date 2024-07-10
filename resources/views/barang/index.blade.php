@@ -6,7 +6,7 @@
     <div class="table-responsive text-nowrap">
         <div class="mx-5 divider text-end">
             @if (Auth::user()->id_level == 1)
-                
+
             <a href="{{route('barang.create')}}" class="btn btn-primary">Create</a>
             @endif
             {{-- <a href="{{route('barang.restore')}}" class="btn btn-info">History</a> --}}
@@ -39,18 +39,14 @@
             <td>{{$data->qty}}</td>
             <td>{{$data->harga}}</td>
             <td>
-
-
-
-
                         <div class="col-lg-4 col-md-6">
                             <div class="mt-3">
 
                                 <a class="btn btn-info" href="{{ route('barang.edit' , $data->id) }}">
                                     <i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                
+
                                 @if (Auth::user()->id_level == 1)
-                                    
+
                                 <button
                                 type="button"
                                 class="btn btn-danger"

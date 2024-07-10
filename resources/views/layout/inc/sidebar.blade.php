@@ -10,7 +10,7 @@
     <div class="app-brand demo">
       <a href="index.html" class="app-brand-link">
        <img src="{{asset('assets/admin/assets/img/ppkd.jpg')}}" alt="" width="50" height="50">
-        <span class="app-brand-text demo menu-text fw-bolder ms-2">Perpus</span>
+        <span class="app-brand-text demo menu-text fw-bolder ms-2">Toko Adhan</span>
       </a>
 
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -36,6 +36,10 @@
      
       
       <!-- Layouts -->
+
+      @if (Auth::user()->id_level == 1)
+        
+      {{-- data master  --}}
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bxs-book"></i>
@@ -46,31 +50,62 @@
           
           {{-- @if (Auth::user()->id_level == 1) --}}
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{ route('user.index') }}" class="menu-link">
               <div data-i18n="Without menu">Users</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{ route('level.index') }}" class="menu-link">
               <div data-i18n="Without navbar">Level</div>
             </a>
           </li>
           {{-- @endif --}}
           {{-- @if (in_array(Auth::user()->id_level , $karyawan)) --}}
+        
           <li class="menu-item">
-            <a href="#" class="menu-link">
-              <div data-i18n="Container">Member</div>
+            <a href="{{ route('KategoriBarang.index') }}" class="menu-link">
+              <div data-i18n="Container">ketegori produk</div>
             </a>
           </li>
+
           <li class="menu-item">
-            <a href="#" class="menu-link">
-              <div data-i18n="Fluid">Books</div>
+            <a href="{{ route('barang.index') }}" class="menu-link">
+              <div data-i18n="Container">barang</div>
             </a>
           </li>
+
+        </ul>
+      </li>
+      @endif
+
+
+      {{-- master produk --}}
+      
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-box"></i>
+          <div data-i18n="Layouts">Data Produk</div>
+        </a>
+
+        <ul class="menu-sub">
+          
+          
+
+
+          @if (Auth::user()->id_level == 2 || Auth::user()->id_level == 3)
+          <li class="menu-item">
+            <a href="{{ route('barang.index') }}" class="menu-link">
+              <div data-i18n="Container">barang</div>
+            </a>
+          </li>
+          @endif
+
         </ul>
       </li>
 
-      
+      @if (Auth::user()->id_level == 2)
+        
+      {{-- transaksi --}}
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bxs-data"></i>
@@ -79,39 +114,31 @@
           
           <ul class="menu-sub">
             <li class="menu-item">
-              <a href="#" class="menu-link">
-                <div data-i18n="Container">Loan a book</div>
+              <a href="{{ route('trx.penjualan') }}" class="menu-link">
+                <div data-i18n="Without menu">Penjualan</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="#" class="menu-link">
-                <div data-i18n="Without menu">Transaction</div>
+              <a href="{{ route('showTrx') }}" class="menu-link">
+                <div data-i18n="Container">Transaksi</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="#" class="menu-link">
-                <div data-i18n="Without navbar">Return a book</div>
-              </a>
-            </li>
+          
           </ul>
       </li>
-        {{-- @endif --}}
-        
-        {{-- <li class="menu-item">
-          <a href="{{ route('showTrx') }}" class="menu-link">
-            <i class="menu-icon tf-icons bx bxs-file-plus"></i>
-            <div data-i18n="Analytics">Transaction Book</div>
-          </a>
-        </li> --}}
+      @endif
+
+
+        @if (Auth::user()->id_level == 3)
           
-        {{-- @if (in_array(Auth::user()->id_level, $Alluser)) --}}
         <li class="menu-item">
-          <a href="#" class="menu-link">
+          <a href="{{ route('trx.penjualan') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home"></i>
-            <div data-i18n="Analytics">Page for loan</div>
+            <div data-i18n="Analytics">Laporan Penjualan</div>
           </a>
         </li>
-        {{-- @endif --}}
+        @endif
+     
 
     </ul>
   </aside>

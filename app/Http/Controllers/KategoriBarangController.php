@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kategori_barang;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class KategoriBarangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('login');
+        $datas = kategori_barang::all();
+        return view('kategori.index' , compact('datas'));
     }
 
     /**
@@ -19,7 +21,7 @@ class LoginController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategori.create');
     }
 
     /**
@@ -27,7 +29,13 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+
+        kategori_barang::create([
+            'nama_kategori' => $request->nama_kategori,
+        ]);
+
+        return redirect()->to('KategoriBarang')->with('success', 'Data berhasil disimpan!');
     }
 
     /**
@@ -43,7 +51,9 @@ class LoginController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edit = kategori_barang::find($id);
+        return view('kategori.edit', compact('edit'));
+        
     }
 
     /**
@@ -51,7 +61,11 @@ class LoginController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        kategori_barang::where('id', $id)->update([
+            'nama_kategori' => $request->nama_kategori,
+        ]);
+
+        return redirect()->to('KategoriBarang')->with('success', 'Data berhasil diubah!');
     }
 
     /**
@@ -59,28 +73,7 @@ class LoginController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        kategori_barang::where('id', $id)->delete();
+        return redirect()->to('KategoriBarang')->with('success', 'Data berhasil dihapus!');
     }
-
-    public function actionLogin(Request $request)
-    {
-     
-
-        $login = $request->only('email', 'password');
-
-        if (auth()->attempt($login)) {
-            return redirect()->to('dashboard');
-        }
-
-        return back()->with('error', 'Invalid credentials');
-    }
-
-    public function actionLogout(Request $request)
-    {
-        auth()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->to('/');
-    }
-     
 }

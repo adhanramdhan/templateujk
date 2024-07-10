@@ -9,7 +9,7 @@ class penjualan extends Model
 {
     use HasFactory;
     protected $fillable = ['id_user', 'kode_transaksi', 'tanggal_transaksi'];
-    
+
 
     public function usertrxname()
     {

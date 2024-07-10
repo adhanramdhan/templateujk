@@ -44,9 +44,9 @@ id="layout-navbar"
                 </div>
               </div>
               <div class="flex-grow-1">
-                <span class="fw-semibold d-block">#</span>  <!-- nama login -->
+                <span class="fw-semibold d-block">{{ Auth::user()->nama_lengkap }}</span>  <!-- nama login -->
                  
-                <small class="text-muted">#</small> <!-- nama levl -->
+                <small class="text-muted">{{ Auth::user()->levels->nama_level }}</small> <!-- nama levl -->
               </div>
             </div>
           </a>

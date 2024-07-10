@@ -2,16 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
+use App\Models\kategori_barang;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class LaporanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('login');
+        $query = Barang::with('kategori')->get();
+        
+        if ($request->filled('tanggal')) {
+            $query->where('created_at', $request->jurusan);
+        }
+
+        if ($request->filled('kategori')) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%');
+        }
+
+        $datas = $query->all();
+        $tahun = Barang::where('created_at')->get();
+
+    
+        // $datas = Barang::with('kategori')->get();
+        $cat = kategori_barang::all();
+        return view('trx.laporan' , compact('cat' , 'datas' , 'tahun'));
     }
 
     /**
@@ -61,26 +79,4 @@ class LoginController extends Controller
     {
         //
     }
-
-    public function actionLogin(Request $request)
-    {
-     
-
-        $login = $request->only('email', 'password');
-
-        if (auth()->attempt($login)) {
-            return redirect()->to('dashboard');
-        }
-
-        return back()->with('error', 'Invalid credentials');
-    }
-
-    public function actionLogout(Request $request)
-    {
-        auth()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->to('/');
-    }
-     
 }

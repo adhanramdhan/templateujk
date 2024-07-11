@@ -78,7 +78,7 @@ class TransaksiController extends Controller
 
     public function penjualan()
     {
-
+        
         $datas = penjualan::with(['usertrxname' , 'dls'])->get();
         return view('trx.penjualan' , compact('datas'));
     }
@@ -106,12 +106,12 @@ class TransaksiController extends Controller
                 'harga' => $request->harga[$index],
                 'qty' => $qty,
                 'total_harga' => $request->harga[$index] * $qty,
-                'jumlah' => $request->harga[$index] * $qty,
+                'jumlah' => $request->jumlah,
                 'nominal_bayar' => $request->nominal_bayar,
                 'kembalian' => $request->kembalian,
             ]);
         }
-        return redirect()->to('dashboard')->with('success', 'Penjualab created successfully!');
+        return redirect()->to('penjualan')->with('success', 'Penjualab created successfully!');
     }
     private function GCTrx()
     {

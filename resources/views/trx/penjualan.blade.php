@@ -52,8 +52,7 @@
                                                 <div class="modal-body">
                                                     <h5>No Transaction: {{ $data->kode_transaksi }}</h5>
                                                     <dl class="row mt-2">
-                                                        <dt class="col-sm-3">Member</dt>
-                                                        <dd class="col-sm-9">: {{ $data->usertrxname->nama_lengkap }}</dd>
+                                                     
                                                         @foreach ($data->dls as $detail)
                                                             <dt class="col-sm-3">Nama Barang</dt>
                                                             <dd class="col-sm-9">: {{ $detail->barang->nama_barang }}</dd>
@@ -64,13 +63,14 @@
                                                             <dt class="col-sm-3">Jumlah</dt>
                                                             <dd class="col-sm-9">: {{ $detail->jumlah }}</dd>
                                                         @endforeach
+                                                        <dt class="col-sm-3">Member</dt>
+                                                        <dd class="col-sm-9">: {{ $data->usertrxname->nama_lengkap }}</dd>
                                                         <dt class="col-sm-3">Nominal Bayar</dt>
                                                         <dd class="col-sm-9">: {{ $data->dls->sum('nominal_bayar') }}</dd>
                                                         <dt class="col-sm-3">Total Harga</dt>
                                                         <dd class="col-sm-9">: {{ $data->dls->sum('total_harga') }}</dd>
                                                         <dt class="col-sm-3">Kembalian</dt>
                                                         <dd class="col-sm-9">: {{ $data->dls->sum('kembalian') }}</dd>
-
                                                     </dl>
                                                     </dl>
                                                 </div>

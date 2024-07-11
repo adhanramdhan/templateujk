@@ -4,8 +4,8 @@
 <div class="col-xl">
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Edit Level</h5>
-        <small class="text-muted float-end">level menu</small>
+        <h5 class="mb-0">Edit Barang</h5>
+        <small class="text-muted float-end">Barang menu</small>
       </div>
       <div class="card-body">
 
@@ -31,7 +31,7 @@
           <div class="mb-3">
             <label class="form-label" for="basic-default-fullname">Select level</label>
             <br>
-            <select name="id_kategori" id="">
+            <select name="id_kategori" id="" class="form-control">
               <option value="" disabled>Choose level</option>
               @foreach ($cc as $level)
               <option value="{{ $level->id }}" {{ $level->id == $edit->id ? 'selected' : '' }} >{{ $level->nama_kategori }}</option>

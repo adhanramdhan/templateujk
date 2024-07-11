@@ -27,7 +27,7 @@
           <div class="mb-3">
             <label class="form-label" for="basic-default-fullname">Select level</label>
             <br>
-            <select name="id_level" id="">
+            <select name="id_level" id="" class="form-control">
               <option value="" disabled>Choose level</option>
               @foreach ($levels as $level)
               <option value="{{ $level->id }}">{{ $level->nama_level }}</option>

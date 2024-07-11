@@ -132,7 +132,7 @@
         @if (Auth::user()->id_level == 3)
           
         <li class="menu-item">
-          <a href="{{ route('trx.penjualan') }}" class="menu-link">
+          <a href="{{ route('laporan.index') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home"></i>
             <div data-i18n="Analytics">Laporan Penjualan</div>
           </a>
